@@ -14,7 +14,7 @@ const Contacts = ({ contacts, removeContact }) => {
     <ContainerContact>
       <TitileContact>Results:</TitileContact>
       <ListContatct>
-        {contacts.map(({ id, name, number }) => {
+        {contacts?.map(({ id, name, number }) => {
           console.log(id);
           return (
             <ItemContatct key={id}>
