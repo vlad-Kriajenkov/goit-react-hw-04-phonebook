@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { useState } from "react";
 import {
   Form,
   ContainerPhoneBook,
@@ -8,57 +8,61 @@ import {
   Button,
 } from "./Phonebook.styled";
 
-export default class Phonebook extends Component {
-  state = {
-    contacts: [],
-    name: "",
-    number: "",
-  };
+export default function Phonebook(addContact) {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  // const [contacts, setContacts] = useState([]);
 
-  handlerChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  const handlerChange = (e) => {
+    const { name, value } = e.target;
+  
+    switch (name) {
+      case "name":
+        setName(value);
+        break;
+      case "number":
+        setNumber(value);
+        break;
+
+      default:
+        return;
+    }
   };
-  handelSubmit = (e) => {
+  const handelSubmit = (e) => {
     e.preventDefault();
-    const { name, number } = this.state;
-    this.props.onSubmit({ name, number });
+    addContact.onSubmit({ name, number });
   };
-  render() {
-    const { name, phone } = this.state;
-    return (
-      <ContainerPhoneBook>
-        <TitlePhoneBook>Phonebook</TitlePhoneBook>
-        <Form action="" onSubmit={this.handelSubmit}>
-          <Labe>
-            Name
-            <Input
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              value={name}
-              onChange={this.handlerChange}
-            />
-          </Labe>
-          <Labe>
-            Phone
-            <Input
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              value={phone}
-              onChange={this.handlerChange}
-            />
-          </Labe>
+  return (
+    <ContainerPhoneBook>
+      <TitlePhoneBook>Phonebook</TitlePhoneBook>
+      <Form action="" onSubmit={handelSubmit}>
+        <Labe>
+          Name
+          <Input
+            type="text"
+            name="name"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            value={name}
+            onChange={handlerChange}
+          />
+        </Labe>
+        <Labe>
+          Phone
+          <Input
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            value={number}
+            onChange={handlerChange}
+          />
+        </Labe>
 
-          <Button type="submit">Add contact</Button>
-        </Form>
-      </ContainerPhoneBook>
-    );
-  }
+        <Button type="submit">Add contact</Button>
+      </Form>
+    </ContainerPhoneBook>
+  );
 }
