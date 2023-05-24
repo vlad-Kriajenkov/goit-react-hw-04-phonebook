@@ -9,6 +9,7 @@ import {
   Wrapper,
 } from "./Contacts.styled";
 const Contacts = ({ contacts, removeContact }) => {
+ 
   return (
     <ContainerContact>
       <TitileContact>Results:</TitileContact>
